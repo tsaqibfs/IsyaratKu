@@ -4,6 +4,10 @@ Prototipe pengenal kosakata SIBI untuk komunikasi sederhana di kelas. Stack awal
 
 **Status saat ini:** setup T06. Halaman awal dan editor teks manual sudah tersedia. Kamera, model SIBI, pengenalan, suara, serta klip belum tersedia. Manifest kosakata sengaja kosong sampai ada validasi. Ini belum demo penerjemahan.
 
+Pembaruan desain T07: workspace memakai palet sage/ivory, font Manrope yang dibundel lokal dan judul serif, area kamera yang lebih dominan, serta navigasi ke panduan dan penjelasan privasi. Interaksi editor tetap sama; status fitur yang belum tersedia ditampilkan secara eksplisit. Reduced motion mengikuti preferensi sistem. Favicon dan aset pratinjau sosial tersedia secara lokal; URL absolut `og:image` perlu disesuaikan dengan domain/base path saat deployment.
+
+Manrope © The Manrope Project Authors, didistribusikan dengan [SIL Open Font License 1.1](public/licenses/manrope-OFL.txt). Pemeriksaan setelah redesign: lint, typecheck, build, 2 unit test, dan 2 e2e Chrome lulus; screenshot desktop 1440 px dan ponsel 390 px ditinjau. Pengujian keyboard juga berjalan pada lebar 375 px.
+
 ## Menjalankan
 
 Gunakan Node.js yang memenuhi `engines` di `package.json` dan npm. Versi mesin saat setup: Node.js `26.8.2` (juga tercatat dalam `.node-version`) dan npm `11.19.1`; rentang versi lain belum diuji. Untuk instalasi baru dari lockfile:

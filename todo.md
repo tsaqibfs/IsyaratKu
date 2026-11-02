@@ -111,6 +111,7 @@ Jika tenggat lebih dekat, prioritaskan 5–10 kata tervalidasi dengan alur dua a
 | 2026-11-01 | Dokumen awal | Selesai | PRD, panduan agen, arsitektur, dan todo tersedia; seluruh tugas implementasi masih terbuka |
 | 2026-11-02 | T06 | Selesai | React 19.3.1, TypeScript 6.0.3, Vite 8.3.5; dependensi exact dan lockfile tersedia; lint, typecheck, 2 unit test, build, dan 2 e2e pada Chrome lokal lulus |
 | 2026-11-02 | T07 | Sebagian | Halaman awal, editor manual, status kosong, petunjuk dan keyboard tersedia; integrasi panel ketik ke klip serta status pipeline belum selesai; tugas tetap terbuka |
+| 2026-11-02 | T07 — desain | Sebagian | Audit dan redesign pada branch `feat/t07-workspace-redesign`: font Manrope lokal, judul serif, workspace asimetris, favicon, panduan, dan penjelasan privasi; screenshot desktop/ponsel diperiksa; fungsi kamera/model/klip tetap belum tersedia |
 | 2026-11-02 | T01–T05 | Menunggu informasi/validasi | Tenggat, validator, peserta, izin rekaman, dan perangkat benchmark belum dikonfirmasi; infrastruktur T06 dikerjakan secara independen |
 
 Format pembaruan: tanggal, ID tugas, status aktif/terhambat/selesai, hasil yang bisa diperiksa, dan dependensi yang masih diperlukan.
