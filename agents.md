@@ -95,3 +95,11 @@ Laporan penyelesaian memuat: hasil konkret, lokasi perubahan, pemeriksaan yang b
 - Peran pemilik adalah usulan; satu orang dapat menjalankan beberapa peran. Jangan mengarang pembagian anggota tim.
 - Jika target 30 kata gagal, dokumentasikan jumlah kata yang benar-benar tervalidasi dan hasil evaluasinya.
 - Simpan keputusan penting dalam bagian keputusan arsitektur; jangan membuka tumpukan dokumen baru tanpa kebutuhan.
+
+## 10. Penamaan Git
+
+- Gunakan branch utama `main` dan branch tugas `<jenis>/<id-tugas>-<ringkasan-kebab-case>` dalam huruf kecil, misalnya `chore/t06-project-setup` atau `feat/t08-camera-lifecycle`.
+- Gunakan Conventional Commits: `<jenis>(<lingkup>): <perubahan>`, misalnya `feat(camera): release media tracks when session stops`.
+- Jenis yang dipakai: `feat`, `fix`, `docs`, `test`, `chore`, dan `refactor`. Pisahkan perubahan yang tidak terkait agar riwayat mudah diperiksa.
+- Review daftar file yang di-stage dan pastikan data peserta, kredensial, serta artefak lokal tidak ikut commit. Jangan menganggap `.gitignore` cukup melindungi file yang sudah terlacak.
+- Jangan menambahkan remote, push, atau menerbitkan repository tanpa tujuan yang diberikan pengguna.

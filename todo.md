@@ -1,6 +1,6 @@
 # Rencana kerja Isyaratku AI
 
-Status awal: dokumen perencanaan sudah dibuat; implementasi, dataset, dan evaluasi belum dimulai.  
+Status per 2 November 2026: setup T06 selesai; halaman awal T07 tersedia sebagian. Dataset, model, dan pipeline kamera belum diimplementasikan.
 Acuan: [PRD](prd.md), [arsitektur](archtecture.md), [panduan agen](agents.md).
 
 ## Cara menggunakan
@@ -23,7 +23,7 @@ Prioritas: P0 wajib untuk alur MVP, P1 wajib sebelum demo final, P2 pengembangan
 
 ## Fase 1 — aplikasi dasar dan spike browser
 
-- [ ] T06 · P0 · Frontend — Bootstrap React + TypeScript + Vite dan struktur folder. Selesai jika skrip dev, lint, typecheck, test sekali jalan, build, preview, dan e2e tersedia serta lockfile disimpan. Dependensi: tidak ada.
+- [x] T06 · P0 · Frontend — Bootstrap React + TypeScript + Vite dan struktur folder. Selesai jika skrip dev, lint, typecheck, test sekali jalan, build, preview, dan e2e tersedia serta lockfile disimpan. Dependensi: tidak ada. Bukti: semua skrip tersedia, lint/typecheck/build lulus, 2 unit test dan 2 e2e Chrome lulus; versi dan batasan audit dicatat di README.
 - [ ] T07 · P0 · Frontend — Buat layar utama, panel teks, panel ketik ke isyarat, petunjuk, dan status. Selesai jika seluruh kontrol inti dapat dipakai dengan keyboard dan mock ditandai jelas. Dependensi: T06.
 - [ ] T08 · P0 · Frontend — Implementasikan lifecycle webcam tanpa mikrofon. Selesai jika mulai/stop, izin ditolak, kamera sibuk, tab tersembunyi, dan unmount ditangani serta track benar-benar berhenti. Dependensi: T06.
 - [ ] T09 · P0 · Frontend + ML — Jalankan Hand Landmarker dua tangan dalam worker. Selesai jika aset same-origin termuat, handedness/mirror diperiksa, hanya satu frame aktif, dan resource frame dilepas. Dependensi: T05, T08.
@@ -109,5 +109,8 @@ Jika tenggat lebih dekat, prioritaskan 5–10 kata tervalidasi dengan alur dua a
 | Tanggal | Tugas | Status | Bukti / hambatan / langkah berikutnya |
 | --- | --- | --- | --- |
 | 2026-11-01 | Dokumen awal | Selesai | PRD, panduan agen, arsitektur, dan todo tersedia; seluruh tugas implementasi masih terbuka |
+| 2026-11-02 | T06 | Selesai | React 19.3.1, TypeScript 6.0.3, Vite 8.3.5; dependensi exact dan lockfile tersedia; lint, typecheck, 2 unit test, build, dan 2 e2e pada Chrome lokal lulus |
+| 2026-11-02 | T07 | Sebagian | Halaman awal, editor manual, status kosong, petunjuk dan keyboard tersedia; integrasi panel ketik ke klip serta status pipeline belum selesai; tugas tetap terbuka |
+| 2026-11-02 | T01–T05 | Menunggu informasi/validasi | Tenggat, validator, peserta, izin rekaman, dan perangkat benchmark belum dikonfirmasi; infrastruktur T06 dikerjakan secara independen |
 
 Format pembaruan: tanggal, ID tugas, status aktif/terhambat/selesai, hasil yang bisa diperiksa, dan dependensi yang masih diperlukan.

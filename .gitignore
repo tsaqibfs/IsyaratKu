@@ -1,0 +1,33 @@
+# Dependencies and generated files
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+*.log
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Participant data must never be committed or published
+data-local/
+datasets/
+consents/
+recordings/
+ml/runs/
+ml/checkpoints/
+*.keras
+*.h5
+*.hdf5
+
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/

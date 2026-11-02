@@ -4,6 +4,10 @@ Nama file mengikuti permintaan: `archtecture.md`.
 Status: rancangan awal, belum merupakan implementasi. Tanggal: 1 November 2026.  
 Acuan: [PRD](prd.md), [panduan agen](agents.md), [rencana kerja](todo.md).
 
+Pembaruan setup 2 November 2026: fondasi SPA dan struktur folder mulai diimplementasikan pada T06. Bagian pipeline kamera, worker, preprocessing, classifier, dan pelatihan di bawah tetap merupakan rancangan. `public/vocabulary.json` berisi daftar kosong dengan status `awaiting-validation`; tidak ada kata yang diklaim didukung. Nama file tetap `archtecture.md`, sesuai dokumen awal.
+
+Fondasi teruji: React 19.3.1, TypeScript 6.0.3, Vite 8.3.5, Vitest 5.0.5, dan Playwright 1.64.1 pada Node.js 26.8.2. Semua dependensi langsung dikunci exact dalam `package.json` dan dependensi transitif dalam `package-lock.json`. D-03 untuk MediaPipe/TF.js dan backend worker masih terbuka; paket ML belum dipasang atau diuji.
+
 ## 1. Keputusan awal
 
 | Area | Keputusan | Alasan |
