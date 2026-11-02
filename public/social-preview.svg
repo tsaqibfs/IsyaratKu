@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f6f6f0"/>
+  <path d="M72 135h1056M72 550h1056" stroke="#d9ded2"/>
+  <rect x="72" y="64" width="44" height="44" rx="12" fill="#244f40"/>
+  <g fill="none" stroke="#f7f6ef" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" transform="translate(72 64) scale(.6875)">
+    <path d="M16 18h20v19H24l-8 7V18ZM43 27h5v21l-8-6h-9"/>
+  </g>
+  <g fill="#263f34">
+    <text x="132" y="96" font-family="Arial, sans-serif" font-weight="600" font-size="30">isyaratku ai</text>
+    <text x="72" y="212" font-family="Arial, sans-serif" font-size="18">SIBI · komunikasi sederhana di kelas</text>
+    <text x="68" y="323" font-family="Georgia, serif" font-size="83" letter-spacing="-3">Ruang untuk saling</text>
+    <text x="68" y="415" font-family="Georgia, serif" font-style="italic" font-size="92" letter-spacing="-3" fill="#57754b">memahami.</text>
+    <text x="72" y="500" font-family="Arial, sans-serif" font-size="20" fill="#626d61">Prototipe awal · model dan klip masih dalam pengembangan</text>
+    <text x="72" y="590" font-family="Arial, sans-serif" font-size="16" fill="#626d61">Dirancang untuk pengenalan di browser.</text>
+  </g>
+</svg>
