@@ -1,4 +1,4 @@
-# Arsitektur Isyaratku AI
+# Arsitektur IsyaratKu
 
 Nama file mengikuti permintaan: `archtecture.md`.  
 Status: rancangan awal, belum merupakan implementasi. Tanggal: 1 November 2026.  

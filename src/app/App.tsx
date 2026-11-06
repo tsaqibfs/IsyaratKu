@@ -7,9 +7,9 @@ export function App() {
     <>
       <a className="skip-link" href="#utama">Lewati ke konten utama</a>
       <header className="site-header">
-        <a className="brand" href="./" aria-label="Isyaratku AI, beranda">
+        <a className="brand" href="./" aria-label="IsyaratKu, beranda">
           <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" width="36" height="36" />
-          isyaratku<span>ai</span>
+          IsyaratKu
         </a>
         <nav aria-label="Navigasi utama">
           <a className="nav-current" href="#utama" aria-current="page">Ruang komunikasi</a>
@@ -85,7 +85,7 @@ export function App() {
           <p>Pada prototipe ini, teks tidak disimpan atau dikirim ke server. Tidak ada akses kamera, mikrofon, atau perekaman. Seluruh font dan aset dimuat dari aplikasi ini.</p>
         </aside>
       </main>
-      <footer><span>isyaratku ai <span className="footer-divider">/</span> Belajar, tanpa jarak komunikasi.</span><a href="#privasi">Tentang privasi <span aria-hidden="true">↗</span></a></footer>
+      <footer><span>IsyaratKu <span className="footer-divider">/</span> Belajar, tanpa jarak komunikasi.</span><a href="#privasi">Tentang privasi <span aria-hidden="true">↗</span></a></footer>
     </>
   )
 }

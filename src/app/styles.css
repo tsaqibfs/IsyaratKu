@@ -32,7 +32,6 @@ button > span { margin-left: 1.4rem; }
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: 2rem; min-height: 6rem; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; text-decoration: none; font-size: 1.45rem; font-weight: 750; letter-spacing: -.07em; }
 .brand img { margin-right: .65rem; }
-.brand > span { margin: .15rem 0 0 .35rem; font-size: .78rem; letter-spacing: -.02em; color: var(--muted); font-weight: 500; }
 nav { display: flex; align-self: stretch; gap: 2rem; align-items: center; }
 nav a { display: flex; height: 100%; align-items: center; position: relative; text-decoration: none; font-size: .78rem; font-weight: 550; color: var(--muted); transition: color 200ms; }
 nav a:hover, nav .nav-current { color: var(--ink); }

@@ -1,4 +1,4 @@
-# Panduan agen untuk Isyaratku AI
+# Panduan agen untuk IsyaratKu
 
 Status: aturan kerja proyek, berlaku untuk perubahan berikutnya.  
 Dokumen acuan: [prd.md](prd.md), [archtecture.md](archtecture.md), [todo.md](todo.md).

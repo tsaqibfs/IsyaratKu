@@ -1,4 +1,4 @@
-# Isyaratku AI — kebutuhan produk
+# IsyaratKu — kebutuhan produk
 
 Status: rancangan awal untuk MVP lomba, belum tervalidasi oleh pengguna.  
 Tanggal: 1 November 2026.  
@@ -6,11 +6,11 @@ Dokumen terkait: [arsitektur](archtecture.md), [panduan agen](agents.md), [renca
 
 ## 1. Ringkasan
 
-Isyaratku AI membantu komunikasi sederhana antara mahasiswa Tuli pengguna SIBI dan dosen atau teman dengar di kelas. Aplikasi mengenali kosakata SIBI terbatas dari webcam menjadi teks, dengan pembacaan suara opsional. Pengguna dengar dapat mengetik kosakata yang didukung untuk menampilkan klip demonstrasi isyarat.
+IsyaratKu membantu komunikasi sederhana antara mahasiswa Tuli pengguna SIBI dan dosen atau teman dengar di kelas. Aplikasi mengenali kosakata SIBI terbatas dari webcam menjadi teks, dengan pembacaan suara opsional. Pengguna dengar dapat mengetik kosakata yang didukung untuk menampilkan klip demonstrasi isyarat.
 
 Pemrosesan kamera dan pengenalan berlangsung di browser. Tidak diperlukan server inferensi atau GPU server. Pelatihan model dilakukan terpisah sebelum aplikasi dirilis.
 
-Judul presentasi yang disarankan: **Isyaratku AI: pengenal kosakata SIBI untuk komunikasi kelas di browser**. Istilah “penerjemah real-time” harus disertai penjelasan bahwa MVP mengenali isyarat terpisah dengan jeda, bukan percakapan SIBI bebas.
+Judul presentasi yang disarankan: **IsyaratKu: pengenal kosakata SIBI untuk komunikasi kelas di browser**. Istilah “penerjemah real-time” harus disertai penjelasan bahwa MVP mengenali isyarat terpisah dengan jeda, bukan percakapan SIBI bebas.
 
 ## 2. Masalah dan sasaran
 
