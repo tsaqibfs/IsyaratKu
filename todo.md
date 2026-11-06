@@ -1,4 +1,4 @@
-# Rencana kerja Isyaratku AI
+# Rencana kerja IsyaratKu
 
 Status per 2 November 2026: setup T06 selesai; halaman awal T07 tersedia sebagian. Dataset, model, dan pipeline kamera belum diimplementasikan.
 Acuan: [PRD](prd.md), [arsitektur](archtecture.md), [panduan agen](agents.md).
@@ -113,5 +113,6 @@ Jika tenggat lebih dekat, prioritaskan 5–10 kata tervalidasi dengan alur dua a
 | 2026-11-02 | T07 | Sebagian | Halaman awal, editor manual, status kosong, petunjuk dan keyboard tersedia; integrasi panel ketik ke klip serta status pipeline belum selesai; tugas tetap terbuka |
 | 2026-11-02 | T07 — desain | Sebagian | Audit dan redesign pada branch `feat/t07-workspace-redesign`: font Manrope lokal, judul serif, workspace asimetris, favicon, panduan, dan penjelasan privasi; screenshot desktop/ponsel diperiksa; fungsi kamera/model/klip tetap belum tersedia |
 | 2026-11-02 | T01–T05 | Menunggu informasi/validasi | Tenggat, validator, peserta, izin rekaman, dan perangkat benchmark belum dikonfirmasi; infrastruktur T06 dikerjakan secara independen |
+| 2026-11-06 | Nama produk dan persiapan data | Dokumentasi | Nama produk menjadi IsyaratKu; panduan persiapan training tersedia di `ml/README.md`. Dataset, validator, dan lingkungan training masih belum tersedia/teruji; T03–T05 dan T12–T16 tetap terbuka |
 
 Format pembaruan: tanggal, ID tugas, status aktif/terhambat/selesai, hasil yang bisa diperiksa, dan dependensi yang masih diperlukan.

@@ -1,4 +1,4 @@
-# Isyaratku AI
+# IsyaratKu
 
 Prototipe pengenal kosakata SIBI untuk komunikasi sederhana di kelas. Stack awal: React, TypeScript, dan Vite, tanpa backend.
 
@@ -51,7 +51,7 @@ Folder yang belum diimplementasikan hanya memiliki `.gitkeep`. Tidak ada model, 
 
 ## Alur Git
 
-Nama repository yang disarankan: `isyaratku-ai`. Branch utama: `main`. Gunakan huruf kecil dan kebab-case:
+Nama repository yang disarankan: `isyaratku`. Branch utama: `main`. Gunakan huruf kecil dan kebab-case:
 
 ```text
 chore/t06-project-setup
@@ -79,6 +79,7 @@ Kerjakan satu tugas pada branch terkait, jalankan pemeriksaan relevan, lalu revi
 - [Arsitektur](archtecture.md) — nama file asli dipertahankan agar tautan tetap konsisten.
 - [Panduan agen](agents.md)
 - [Urutan tugas](todo.md)
+- [Persiapan data dan training](ml/README.md)
 
 ## Rujukan setup
 
