@@ -1,0 +1,75 @@
+{
+  "id": "words-reference-v2",
+  "experimental": true,
+  "releaseEligible": false,
+  "preprocessVersion": "hands-clip-normalized-v1",
+  "inputShape": [
+    null,
+    30,
+    137
+  ],
+  "labels": [
+    "apa",
+    "bantu",
+    "belum",
+    "buku",
+    "guru",
+    "halo",
+    "jadwal",
+    "jumpa",
+    "kamu",
+    "kasih",
+    "kelas",
+    "maaf",
+    "minta",
+    "mulai",
+    "nama",
+    "pagi",
+    "paham-mengerti",
+    "sampai",
+    "saya",
+    "sekolah",
+    "selamat",
+    "selesai",
+    "siapa",
+    "tanya",
+    "terima",
+    "tidak",
+    "tugas",
+    "ujian",
+    "ulang",
+    "waktu",
+    "ya"
+  ],
+  "sourceModelSha256": "4b7661afda1c1c43c74414db650615c16013be8a1fc9e148ee5af884af3109a9",
+  "sha256": {
+    "model.json": "13eed9859acd40fa00c645e86e8f1be1c4a8725154c9eda00669c4a0d69106d0",
+    "weights.bin": "945f2c5aba88e405a94ebba856006994043a6cbe27643ff8663b0ee8756cb210",
+    "labels.json": "e9aa267fc6235921ddeea5dc9c91695cbd9eb7dc9b3ead4b28a240bcd4ff06f6",
+    "preprocess.json": "884ace15eaa38c956fee71e099c5f517670deb1b0059d33ade0bebfb50e673e9"
+  },
+  "runtime": {
+    "tensorflowjs": "4.22.0",
+    "mediapipe": "0.10.21",
+    "backend": "cpu"
+  },
+  "nodeParity": {
+    "maxAbsError": 1.1920928955078125e-7,
+    "top1Equal": true,
+    "samples": 31,
+    "tolerance": 0.0001
+  },
+  "limits": {
+    "minDurationMs": 1000,
+    "maxDurationMs": 10000,
+    "maxGapMs": 200,
+    "minHandFraction": 0.2,
+    "minHandFrames": 5,
+    "maxInternalNoHandGapMs": 400
+  },
+  "decision": {
+    "minScore": 0.85,
+    "minMargin": 0.15,
+    "calibrated": false
+  }
+}

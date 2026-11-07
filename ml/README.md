@@ -181,3 +181,8 @@ Saat alat ekspor tersedia, ikuti kontrak resmi di arsitektur. Tabel ini bukan pe
 - [MediaPipe Hand Landmarker](https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/web_js).
 - [Instalasi TensorFlow dan kebutuhan lingkungan](https://www.tensorflow.org/install/pip).
 - [Konversi model TensorFlow.js](https://www.tensorflow.org/js/guide/conversion).
+
+
+## Build dari GitHub untuk Vercel
+
+`npm run prepare:ml` kini juga menulis paket inferensi ke `web-models/<modelId>/`. Folder ini harus di-commit bersama konfigurasi aktif. `public/ml/` tetap generated dan diabaikan Git. Pada hosting, `npm run check` menyiapkan aset dari paket tersebut, SDK npm, dan detektor resmi ber-checksum; tidak memakai dataset, `.keras`, atau Python. Lihat [panduan deployment](../DEPLOYMENT.md).

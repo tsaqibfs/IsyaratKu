@@ -1,0 +1,22 @@
+{
+  "version": "hands-clip-normalized-v1",
+  "featureDim": 137,
+  "handSlots": [
+    "Left",
+    "Right"
+  ],
+  "mirror": false,
+  "sequenceLength": 30,
+  "timeNormalization": "whole_segmented_clip",
+  "sampleHz": 15,
+  "maxInterpolationGapMs": 200,
+  "handFeatureLayout": [
+    "local_xyz_63",
+    "wrist_xyz_3",
+    "presence_1"
+  ],
+  "tail": "right_wrist_minus_left_wrist_xyz_if_both_present",
+  "aspectCorrection": "multiply_x_and_z_by_width_over_height",
+  "palmScale": "mean_distance_wrist_to_index_mcp_and_pinky_mcp",
+  "browserParityVerified": false
+}
