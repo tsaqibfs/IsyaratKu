@@ -1,99 +1,116 @@
 # IsyaratKu
 
-Konfigurasi auto-deploy GitHub → Vercel tersedia di [DEPLOYMENT.md](DEPLOYMENT.md). Paket inferensi yang perlu ikut Git ada di `web-models/`; build hosting menyiapkan aset browser tanpa dataset/Python. Gunakan preset Vite, install `npm ci`, build `npm run check`, output `dist`, Node 26.x. Repository dan akun Vercel masih perlu dihubungkan setelah perubahan di-commit dan dipush.
+IsyaratKu membantu pengguna SIBI dan lawan bicara memeriksa kata dari satu gerakan tangan melalui kamera. Hasilnya dapat diperbaiki, ditampilkan sebagai teks besar, atau dibacakan jika perangkat mendukung.
 
-Pembaruan 7 November 2026: model v2 dengan 31 label sudah dilatih dan terhubung ke web. Konfigurasi aktif berada di `ml/configs/active-model.json`. Lint/typecheck/build, 13 unit test dan 6 e2e Chrome lulus. Lihat [hasil model v2](reports/training-reference-v2.md). Hasil 23 kelas di bawah merupakan riwayat model v1.
+Fokus awalnya adalah komunikasi singkat terkait kegiatan belajar bersama guru SLB dan pengguna SIBI dewasa.
 
-Aplikasi web pengenal kosakata SIBI untuk komunikasi sederhana di kelas. React, TypeScript, dan Vite, dengan inferensi lokal tanpa backend.
+**[Buka demo](https://isyaratku-zeta.vercel.app/)** · [Panduan pemasangan di Vercel](DEPLOYMENT.md) · [Panduan data dan pelatihan model](ml/README.md)
 
-**Status 7 November 2026:** model eksperimen 31 kata sudah terhubung ke kamera dan editor melalui MediaPipe Tasks Vision serta TensorFlow.js di worker. Alurnya berupa satu klip gerakan yang direkam secara eksplisit, bukan pengenalan percakapan kontinu. Kandidat hanya masuk editor setelah konfirmasi. Data training masih satu video per label; kualitas pada pengguna baru belum diketahui. Suara dan klip balasan belum tersedia. Manifest kosakata rilis sengaja tetap kosong; label eksperimen disediakan oleh metadata model yang terpisah.
+> **Status 8 November 2026:** model memuat 31 kata percobaan. Ketepatannya pada pengguna baru belum diukur. Pencarian kata dan pembaca pesan sudah diuji pada versi lokal, tetapi belum tersedia pada demo publik saat pemeriksaan terakhir.
 
-Pembaruan desain T07: workspace memakai palet sage/ivory, font Manrope yang dibundel lokal dan judul serif, area kamera yang lebih dominan, serta navigasi ke panduan dan penjelasan privasi. Interaksi editor tetap sama; status fitur yang belum tersedia ditampilkan secara eksplisit. Reduced motion mengikuti preferensi sistem. Favicon dan aset pratinjau sosial tersedia secara lokal; URL absolut `og:image` perlu disesuaikan dengan domain/base path saat deployment.
+## Apa yang bisa dilakukan?
 
-Manrope © The Manrope Project Authors, didistribusikan dengan [SIL Open Font License 1.1](public/licenses/manrope-OFL.txt). Pemeriksaan setelah redesign: lint, typecheck, build, 2 unit test, dan 2 e2e Chrome lulus; screenshot desktop 1440 px dan ponsel 390 px ditinjau. Pengujian keyboard juga berjalan pada lebar 375 px.
+| Fitur | Cara kerjanya |
+| --- | --- |
+| Membaca satu isyarat | Nyalakan kamera, tunggu hitung mundur, lalu lakukan satu gerakan utuh. |
+| Memeriksa hasil | Kata masuk ke pesan hanya setelah kamu memilih **Gunakan kata**. |
+| Memperbaiki pesan | Ketik, ubah, atau bersihkan pesan secara langsung. |
+| Menampilkan teks besar | Perbesar pesan agar mudah dibaca lawan bicara. |
+| Mencari kosakata | Cari dari 31 kata yang dapat dicoba tanpa menyalakan kamera. Pilih kata untuk membuka panduan dan tautan Kamus SIBI. |
+| Membacakan pesan | Pilih **Bacakan pesan** jika suara bahasa Indonesia tersedia di perangkat. Pilih **Hentikan suara** untuk berhenti. |
 
-## Menjalankan
+Memilih kata pada daftar panduan tidak mengisi pesan dan tidak mengubah hasil pengenalan kamera. Aplikasi menyediakan tautan rujukan, belum menampilkan video contoh isyarat di halaman sendiri.
 
-Gunakan Node.js yang memenuhi `engines` di `package.json` dan npm. Versi mesin saat setup: Node.js `26.8.2` (juga tercatat dalam `.node-version`) dan npm `11.19.1`; rentang versi lain belum diuji. Untuk instalasi baru dari lockfile:
+## Cara menggunakan
+
+1. Buka aplikasi melalui laptop atau komputer dengan kamera. Pilih tempat yang terang.
+2. Bila perlu, buka **Kosakata** untuk mencari kata yang ingin dicoba.
+3. Pilih **Mulai kamera** dan izinkan akses kamera. Mikrofon tidak diperlukan.
+4. Posisikan tangan agar seluruh gerakan terlihat. Pilih **Rekam satu isyarat**, lalu tunggu hitung mundur 3 detik selesai.
+5. Lakukan satu isyarat utuh, kemudian pilih **Selesai dan periksa**. Rekaman berhenti otomatis setelah 10 detik.
+6. Periksa kata yang terbaca. Pilih **Gunakan kata** hanya jika sesuai. Jika keliru, pilih **Ulangi gerakan** atau **Perbaiki pesan**.
+7. Perbaiki pesan di ruang percakapan. Gunakan **Tampilkan teks besar** atau **Bacakan pesan** sesuai kebutuhan.
+8. Pilih **Hentikan kamera** setelah selesai.
+
+Kamu tetap dapat mengetik dan menampilkan pesan tanpa kamera. Pesan hilang saat halaman dimuat ulang.
+
+## Batas kemampuan saat ini
+
+- Aplikasi membaca satu isyarat tingkat kata per rekaman. Aplikasi belum menerjemahkan kalimat atau percakapan isyarat secara terus-menerus.
+- Model belajar dari satu video sumber untuk setiap kata. Variasi gerakan, pengguna, posisi kamera, dan pencahayaan dapat menghasilkan kata yang keliru. Hasil selalu perlu diperiksa.
+- Model hanya mencakup 31 label percobaan, bukan seluruh SIBI. Data huruf terpisah tidak digunakan oleh model kata aktif.
+- Pembaca pesan hanya memakai suara bahasa Indonesia yang berjalan di perangkat. Jika suara tersebut tidak tersedia, tombol dinonaktifkan dengan penjelasan. Aplikasi tidak menggantinya dengan layanan suara daring.
+- Teks menjadi video isyarat, pengenalan percakapan berkelanjutan, dan pengumpulan data melalui aplikasi masih menjadi rencana pengembangan.
+- Tampilan ponsel sudah diperiksa. Ketepatan pengenalan melalui kamera ponsel, seluruh browser, dan penggunaan tanpa internet belum dijamin.
+
+## Privasi dan sumber data
+
+Kamera menyala setelah dipilih pengguna, tanpa mikrofon. Video, data gerakan, dan pesan diproses di perangkat serta tidak diunggah atau disimpan sebagai riwayat percakapan. Kamera dan pembacaan suara berhenti saat pengguna berpindah tab. Pembacaan juga berhenti ketika pesan diubah atau dibersihkan.
+
+Internet dipakai untuk memuat aplikasi dan asetnya. Tautan Kamus SIBI membuka situs pihak ketiga hanya saat dipilih.
+
+Video pelatihan berasal dari [Kamus SIBI Kemendikdasmen](https://pkplk.kemendikdasmen.go.id/sibi/pencarian/advance). Dokumentasi izin tertulis untuk pelatihan dan distribusi model belum tersedia. Akses publik ke sumber tidak dijadikan dasar untuk mengklaim bahwa seluruh hak penggunaan sudah terpenuhi.
+
+Jangan unggah rekaman pribadi, identitas peserta, atau formulir persetujuan ke repositori maupun folder publik. Pengumpulan data baru perlu disertai persetujuan penggunaan yang jelas.
+
+## Menjalankan di komputer sendiri
+
+Bagian ini untuk anggota tim yang ingin menjalankan atau mengembangkan kode. Siapkan Node.js dan npm; versi Node proyek tercatat di `.node-version`, sedangkan rentang yang didukung tercantum di `package.json`.
+
+Di folder proyek, jalankan:
 
 ```sh
 npm ci
-npm run prepare:ml
 npm run dev
 ```
 
-`prepare:ml` memerlukan `.venv` dan artefak training lokal yang sudah ada; lihat [panduan ML](ml/README.md). Aset model, bobot, detektor, serta WASM di `public/ml/` dihasilkan secara lokal dan tidak masuk Git. Pada workspace yang sudah disiapkan, cukup `npm run dev`. Build worker klasik berjalan otomatis sebelum dev/build; restart dev setelah mengubah kode worker. Tidak diperlukan `.env`, akun, atau server GPU.
+Buka alamat lokal yang ditampilkan di terminal. Tidak diperlukan akun, berkas `.env`, Python, pelatihan ulang, atau server GPU untuk menjalankan web dengan model yang sudah tersedia.
 
-Buka URL localhost dari Vite. Pilih **Mulai kamera → Rekam satu isyarat → Selesai dan periksa → Gunakan kata**. Peragakan satu gerakan utuh selama 1–10 detik dengan jeda singkat. Kandidat lemah, tanpa tangan, frame terputus, atau kehilangan tangan di tengah gerakan lebih dari 400 ms ditolak. Ambang skor belum terkalibrasi dan tidak menjamin penolakan semua gerakan asing. Gunakan koreksi/ketik jika hasil tidak sesuai.
+Model browser disertakan di `web-models/`. Perintah pengembangan dan build menyiapkan asetnya secara otomatis. Persiapan pertama memerlukan internet untuk mengambil detektor tangan resmi dan memeriksa keutuhan berkasnya.
 
-Kamera hanya diminta atas klik dan tidak meminta mikrofon. Video tidak disimpan; buffer landmark sementara dibuang setelah selesai, batal, atau stop. Track dan worker dilepas saat stop, unmount, tab tersembunyi, atau perangkat berakhir. Semua aset same-origin; tidak ada unggahan video/landmark/teks atau penyimpanan percakapan secara persisten.
+`npm run prepare:ml` hanya digunakan saat mengekspor hasil pelatihan baru dari lingkungan Python lokal. Perintah tersebut **bukan langkah instalasi web biasa**. Lihat [panduan ML](ml/README.md) untuk pekerjaan pelatihan.
 
-## Pemeriksaan
+## Pemeriksaan sebelum mengirim perubahan
 
 ```sh
-npm run lint
-npm run typecheck
-npm run test
-npm run build
+npm run check
 npm run test:e2e
 ```
 
-`test:e2e` membangun aplikasi dan menjalankan Playwright pada build produksi dengan Google Chrome lokal (`channel: chrome`). Pasang Google Chrome terlebih dahulu jika belum tersedia. `npm run preview` dapat dipakai untuk meninjau build secara manual. `npm run check` menggabungkan lint, unit test, typecheck, dan build.
+`check` menjalankan pemeriksaan kode, paket model, tes aplikasi, dan build. `test:e2e` menguji aplikasi di Google Chrome; Chrome perlu terpasang. Untuk melihat hasil build secara manual, jalankan `npm run preview`.
 
-Pemeriksaan integrasi 6 November 2026: lint/typecheck/build lulus, 11 unit test dan 6 e2e Chrome lulus. Preprocessing TypeScript setara dengan fixture sintetis Python (toleransi 0,00002). Prediksi TF.js di Chrome setara dengan Keras pada 23 input sumber (selisih maksimum 0,0000001192 dan top-1 sama). Uji inferensi 30 kali tidak menambah tensor aktif. Kamera kanvas sintetis dipakai untuk menguji video dan worker nyata, penolakan tanpa tangan, stop, serta event simulasi hidden/perangkat terputus. Izin ditolak diuji melalui API mock. Ini bukan pengujian webcam fisik atau kualitas SIBI pada pengguna baru.
+Pemeriksaan lokal terakhir pada 8 November 2026: **26 tes aplikasi, 5 tes paket model, dan 11 tes Chrome lulus**, beserta pemeriksaan kode, tipe data, dan build. Pemeriksaan ini menguji fungsi aplikasi; hasilnya bukan ukuran ketepatan pengenalan pada pengguna baru.
 
-Mode development juga diperiksa: model siap, rekaman tanpa tangan ditolak, tanpa page error. Audit jaringan mode kamera tidak menemukan request lintas origin atau upload, dan local/session storage tetap kosong. Rincian benchmark, hasil, serta batasan ada di [laporan integrasi](reports/browser-integration-v1.md).
+Uji Chrome pada perangkat pemeriksaan belum menemukan suara bahasa Indonesia lokal. Alur pembaca pesan diuji dengan suara pengganti yang terkontrol; kualitas suara pada perangkat yang mendukung masih perlu dicoba langsung.
 
-Hasil pemeriksaan 2 November 2026: lint dan typecheck lulus, 2 unit test lulus, build produksi berhasil, dan 2 e2e lulus pada Google Chrome lokal. Preview build digunakan otomatis oleh Playwright; kompatibilitas browser lain belum diuji.
+## Teknologi dan susunan proyek
 
-Audit npm pada tanggal yang sama: dependensi produksi memiliki 0 temuan; audit seluruh dependensi melaporkan 12 temuan tingkat sedang pada rantai tooling ESLint/typescript-eslint melalui `minimatch` (advisory `GHSA-g3hv-75wg-m249`). Ini tetap merupakan keterbatasan setup, walaupun tidak dibundel sebagai dependensi runtime aplikasi. Tidak digunakan `audit fix --force`, downgrade besar, atau override lintas versi mayor yang belum diuji. Tinjau kembali saat rilis perbaikan kompatibel tersedia.
+Antarmuka memakai React, TypeScript, Vite, dan CSS. MediaPipe mendeteksi titik tangan; model LSTM mengenali kata melalui TensorFlow.js. Pengolahan kamera dan model dipisahkan dari tampilan menggunakan Web Worker. Aplikasi disajikan melalui Vercel.
 
-## Struktur
+| Folder | Isi |
+| --- | --- |
+| `src/app/` | Halaman utama dan tampilan aplikasi. |
+| `src/features/` | Kamera, pembaca pesan, dan panduan kosakata. |
+| `src/data/` | Daftar kata yang mengikuti model aktif. |
+| `src/ml/` | Pengolahan gerakan dan pengenalan kata di browser. |
+| `web-models/` | Paket model yang dibutuhkan web dan disertakan di Git. |
+| `ml/` | Konfigurasi dan skrip pelatihan lokal. Dataset pribadi tidak ikut Git. |
+| `scripts/` | Persiapan aset dan proses build. |
+| `tests/` | Pemeriksaan otomatis. |
+| `reports/` | Hasil dan keterbatasan pengujian model. |
 
-- `src/app`: halaman dan komposisi aplikasi.
-- `src/features`: area fitur kamera, pengenalan, percakapan, teks ke isyarat, dan dataset.
-- `src/ml`: preprocessing, kontrak model, keputusan kandidat, dan worker browser.
-- `public`: aset publik berizin dan manifest kosakata.
-- `ml`: konfigurasi, fixture sintetis, skrip ekstraksi/training/ekspor, dan lockfile lingkungan Python.
-- `tests`: unit dan e2e.
-- `reports`: laporan agregat, tanpa identitas peserta.
+Perancangan, kode, pengujian, dan dokumentasi dibantu OpenAI Codex serta ChatGPT. Tim tetap bertanggung jawab untuk memahami, meninjau, dan menjelaskan hasilnya. Font Manrope menggunakan [SIL Open Font License 1.1](public/licenses/manrope-OFL.txt); hak komponen lain mengikuti ketentuan masing-masing.
 
-`src/ml` berisi preprocessing, kontrak, keputusan kandidat, dan worker nyata. `scripts` menyiapkan paket TF.js serta membangun worker klasik agar loader WASM bekerja pada dev maupun produksi. Jangan menaruh rekaman, formulir persetujuan, atau identitas peserta dalam `public` atau Git. Aturan ignore adalah perlindungan tambahan, bukan pengganti pemeriksaan isi commit.
+## Pengembangan dan dokumentasi
 
-## Alur Git
-
-Nama repository yang disarankan: `isyaratku`. Branch utama: `main`. Gunakan huruf kecil dan kebab-case:
-
-```text
-chore/t06-project-setup
-feat/t08-camera-lifecycle
-feat/t09-hand-landmarker-worker
-fix/t18-duplicate-prediction
-docs/t03-vocabulary-validation
-test/t30-browser-privacy
-```
-
-Format commit mengikuti Conventional Commits, dengan subjek ringkas yang menjelaskan perubahan:
-
-```text
-chore(project): bootstrap react typescript workspace
-feat(camera): release media tracks when session stops
-fix(recognition): reject predictions from previous sessions
-docs(planning): record validated vocabulary scope
-```
-
-Kerjakan satu tugas pada branch terkait, jalankan pemeriksaan relevan, lalu review diff sebelum commit. Merge ke `main` setelah diperiksa. Jangan gunakan force push atau mengubah riwayat bersama tanpa kebutuhan yang disepakati. Pengaturan remote dan publikasi mengikuti izin pemilik proyek.
-
-## Dokumen acuan
+Gunakan nama branch yang menjelaskan pekerjaan, misalnya `codex/add-speech-and-word-guide` atau `codex/update-readme-and-proposal`. Gunakan commit ringkas seperti `feat(ui): add searchable vocabulary` atau `docs(readme): simplify project guide`. Periksa perubahan dan hasil tes sebelum menggabungkannya. Pengiriman ke GitHub dan penerbitan ke Vercel dilakukan terpisah dari penyimpanan lokal.
 
 - [Kebutuhan produk](prd.md)
-- [Arsitektur](archtecture.md) — nama file asli dipertahankan agar tautan tetap konsisten.
-- [Panduan agen](agents.md)
-- [Urutan tugas](todo.md)
-- [Persiapan data dan training](ml/README.md)
+- [Arsitektur sistem](archtecture.md)
+- [Daftar tugas](todo.md)
+- [Persiapan data dan pelatihan](ml/README.md)
+- [Hasil pelatihan model 31 kata](reports/training-reference-v2.md)
+- [Paket model browser](web-models/README.md)
+- [Pemasangan di Vercel](DEPLOYMENT.md)
 
-## Rujukan setup
-
-- [Vite](https://vite.dev/guide/)
-- [Vitest](https://vitest.dev/guide/)
-- [Playwright web server](https://playwright.dev/docs/test-webserver)
+Dokumen perencanaan dan laporan lama mencatat tahap pengembangan masing-masing. Gunakan kode dan hasil pengujian terbaru untuk memastikan kemampuan versi yang akan diterbitkan.
