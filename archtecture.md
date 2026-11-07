@@ -242,3 +242,8 @@ Pemeriksaan: 11 unit dan 6 e2e Chrome lulus, termasuk worker/model nyata dengan 
 - [MDN: getUserMedia dan secure context](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia).
 - [MDN: localService](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisVoice/localService).
 - [MDN: voiceschanged](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis/voiceschanged_event).
+
+
+### Persiapan auto deploy GitHub ke Vercel 7 November 2026
+
+Paket lima file inferensi untuk model aktif disimpan di `web-models/<modelId>/` sebagai sumber publik yang ikut Git. Generated `public/ml/` tetap diabaikan. Prebuild menyiapkan model dengan validasi checksum/kontrak, WASM dari npm, detektor resmi versi 1 dengan SHA terkunci, lalu worker klasik. JSON dipastikan LF sebelum hashing agar checkout Linux konsisten. `vercel.json` memakai Vite, npm ci, npm run check, dan dist. Build hosting tidak memerlukan Python atau dataset. Simulasi source bersih, tes paket, dan pemeriksaan web lulus; push/deploy remote dan verifikasi URL final masih diperlukan. Lihat DEPLOYMENT.md.
