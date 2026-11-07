@@ -15,3 +15,11 @@ playwright-report/
 .env
 .env.*
 !.env.example
+
+# Internal planning documents remain on this computer only
+/docs/
+/agents.md
+/AGENTS.md
+/archtecture.md
+/prd.md
+/todo.md

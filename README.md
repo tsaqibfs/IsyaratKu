@@ -105,12 +105,9 @@ Perancangan, kode, pengujian, dan dokumentasi dibantu OpenAI Codex serta ChatGPT
 
 Gunakan nama branch yang menjelaskan pekerjaan, misalnya `codex/add-speech-and-word-guide` atau `codex/update-readme-and-proposal`. Gunakan commit ringkas seperti `feat(ui): add searchable vocabulary` atau `docs(readme): simplify project guide`. Periksa perubahan dan hasil tes sebelum menggabungkannya. Pengiriman ke GitHub dan penerbitan ke Vercel dilakukan terpisah dari penyimpanan lokal.
 
-- [Kebutuhan produk](prd.md)
-- [Arsitektur sistem](archtecture.md)
-- [Daftar tugas](todo.md)
 - [Persiapan data dan pelatihan](ml/README.md)
 - [Hasil pelatihan model 31 kata](reports/training-reference-v2.md)
 - [Paket model browser](web-models/README.md)
 - [Pemasangan di Vercel](DEPLOYMENT.md)
 
-Dokumen perencanaan dan laporan lama mencatat tahap pengembangan masing-masing. Gunakan kode dan hasil pengujian terbaru untuk memastikan kemampuan versi yang akan diterbitkan.
+Laporan pengujian terdahulu mencatat tahap pengembangan masing-masing. Gunakan kode dan hasil pengujian terbaru untuk memastikan kemampuan versi yang akan diterbitkan.

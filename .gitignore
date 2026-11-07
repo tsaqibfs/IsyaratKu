@@ -37,3 +37,11 @@ __pycache__/
 
 # Vercel local account and project metadata
 .vercel/
+
+# Internal planning documents remain on this computer only
+/docs/
+/agents.md
+/AGENTS.md
+/archtecture.md
+/prd.md
+/todo.md
