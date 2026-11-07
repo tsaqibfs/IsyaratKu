@@ -1,4 +1,6 @@
+import activeModel from '../../ml/configs/active-model.json'
 import { useState } from 'react'
+import { RecognitionPanel } from '../features/camera/RecognitionPanel'
 
 export function App() {
   const [text, setText] = useState('')
@@ -15,7 +17,7 @@ export function App() {
           <a className="nav-current" href="#utama" aria-current="page">Ruang komunikasi</a>
           <a href="#panduan">Panduan</a>
         </nav>
-        <span className="stage"><span className="status-dot" aria-hidden="true" />Prototipe awal</span>
+        <span className="stage"><span className="status-dot" aria-hidden="true" />Model eksperimen</span>
       </header>
       <main id="utama" tabIndex={-1}>
         <section className="intro" aria-labelledby="judul">
@@ -25,36 +27,13 @@ export function App() {
             <p>Mulai dari percakapan sederhana. Sebuah ruang untuk menghubungkan isyarat, tulisan, dan kebutuhan belajar.</p>
           </div>
           <aside className="intro-status" aria-label="Status pengembangan">
-            <span className="small-label">Sedang dibangun, bersama.</span>
-            <p>Editor teks sudah bisa digunakan. Kamera, model, dan klip SIBI masih dalam pengembangan.</p>
-            <span className="status-caption">Belum ada pengenalan otomatis</span>
+            <span className="small-label">Coba satu isyarat, periksa hasilnya.</span>
+            <p>Model {activeModel.expectedLabelCount} kata kini berjalan di browser. Rekam satu gerakan dan periksa kandidat sebelum menambahkannya ke percakapan.</p>
+            <span className="status-caption">Eksperimen · belum diuji pada pengguna baru</span>
           </aside>
         </section>
         <div className="workspace">
-          <section className="panel camera-panel" aria-labelledby="kamera-judul">
-            <div className="panel-heading">
-              <div><span className="section-index">01 / area isyarat</span><h2 id="kamera-judul">Isyarat ke teks</h2></div>
-              <span className="panel-status">Kamera nonaktif</span>
-            </div>
-            <div className="camera-placeholder">
-              <span className="viewfinder-corner corner-start" aria-hidden="true" />
-              <span className="viewfinder-corner corner-end" aria-hidden="true" />
-              <div className="camera-empty">
-                <svg className="camera-symbol" viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                  <rect x="10" y="19" width="31" height="27" rx="7" />
-                  <path d="m41 28 13-7v23l-13-7M23 27v11m-5-5.5h10" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <h3>Di sini, isyarat menjadi awal percakapan.</h3>
-                <p>Kamera belum aktif. Area ini akan menampilkan pratinjau saat fitur kamera tersedia.</p>
-              </div>
-              <span className="viewfinder-caption">Pratinjau kamera · belum tersedia</span>
-            </div>
-            <div className="camera-actions">
-              <button type="button" disabled aria-describedby="kamera-info">Mulai kamera <span aria-hidden="true">↗</span></button>
-              <span className="local-note">Tanpa akses mikrofon</span>
-            </div>
-            <p className="note" id="kamera-info">Belum tersedia. Halaman ini tidak meminta akses kamera atau mikrofon.</p>
-          </section>
+          <RecognitionPanel onCommit={word => setText(current => `${current.trimEnd()}${current.trim() ? ' ' : ''}${word}`)} />
           <section className="panel conversation-panel" aria-labelledby="teks-judul">
             <div className="panel-heading">
               <div><span className="section-index">02 / tulis pesan</span><h2 id="teks-judul">Ruang percakapan</h2></div>
@@ -66,7 +45,7 @@ export function App() {
               <span className="character-count">{text.length} karakter</span>
               <button className="text-button" type="button" disabled={!text} onClick={() => setText('')}>Bersihkan teks</button>
             </div>
-            <p className="note" id="teks-info">Teks hanya ada di halaman ini dan hilang saat dimuat ulang. Belum ada hasil pengenalan otomatis.</p>
+            <p className="note" id="teks-info">Teks hanya ada di halaman ini dan hilang saat dimuat ulang. Kandidat baru ditambahkan setelah kamu memilih Gunakan kata.</p>
             <div className="clip-status">
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="4" y="6" width="24" height="20" rx="4" /><path d="m13 11 8 5-8 5V11Z" strokeLinejoin="round" /></svg>
               <div><h3>Teks ke klip isyarat</h3><p>Menunggu kosakata dan klip SIBI yang telah divalidasi. Belum ada kata yang didukung.</p></div>
@@ -76,13 +55,13 @@ export function App() {
         <section className="guidance" id="panduan" aria-labelledby="batasan">
           <div><p className="eyebrow">Sebelum memulai</p><h2 id="batasan">Langkah kecil.<br />Percakapan lebih terbuka.</h2></div>
           <div className="guidance-copy">
-            <p>Target awal adalah 5–10 isyarat terpisah dengan jeda. Kosakata akan diperluas setelah validasi bersama pengguna SIBI.</p>
-            <p>Pengenalan ini belum mencakup percakapan bebas atau seluruh SIBI. Untuk saat ini, gunakan editor untuk mengetik secara manual.</p>
+            <p>Nyalakan kamera, pilih Rekam satu isyarat, lakukan gerakan utuh, lalu pilih Selesai dan periksa. Periksa kandidat dan gunakan kata jika sesuai maksudmu.</p>
+            <p>Model eksperimen belum mengenali percakapan bebas atau seluruh SIBI. Data training masih terbatas. Jika hasil meragukan, ulangi gerakan atau ketik pesan secara manual.</p>
           </div>
         </section>
         <aside className="privacy-note" id="privasi" aria-labelledby="privasi-judul">
           <h2 id="privasi-judul">Percakapan tetap di halaman ini.</h2>
-          <p>Pada prototipe ini, teks tidak disimpan atau dikirim ke server. Tidak ada akses kamera, mikrofon, atau perekaman. Seluruh font dan aset dimuat dari aplikasi ini.</p>
+          <p>Kamera aktif atas pilihanmu, tanpa mikrofon. Tombol rekam hanya menampung landmark sementara untuk satu isyarat; video tidak disimpan. Video, landmark, dan teks tidak diunggah atau disimpan secara persisten. Kamera berhenti saat dihentikan atau tab tidak aktif. Seluruh model, font, dan aset dimuat dari aplikasi ini.</p>
         </aside>
       </main>
       <footer><span>IsyaratKu <span className="footer-divider">/</span> Belajar, tanpa jarak komunikasi.</span><a href="#privasi">Tentang privasi <span aria-hidden="true">↗</span></a></footer>

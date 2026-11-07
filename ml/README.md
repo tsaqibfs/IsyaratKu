@@ -1,6 +1,28 @@
 # Persiapan data dan training IsyaratKu
 
-Tanggal: 6 November 2026. Status: panduan persiapan; belum ada dataset, model, atau skrip training yang siap dijalankan. Acuan: [PRD](../prd.md), [arsitektur](../archtecture.md), dan [todo](../todo.md).
+## Pembaruan 7 November 2026
+
+Dataset lokal kini 57 video (51.07 MiB): 26 huruf dan 31 kata. Model aktif `words-reference-v2` memiliki 31 kelas. Delapan tambahan dibanding v1: jumpa, kasih, pagi, paham-mengerti, sampai, selamat, terima, ujian. Terima dan Kasih adalah dua label terpisah. Seluruh input sumber v2 cocok pada uji parity Keras/TF.js Chrome; model tetap eksperimen tanpa test peserta baru. Bagian bertanggal 6 November di bawah adalah riwayat v1, bukan inventaris terbaru.
+
+Konfigurasi aktif di `ml/configs/active-model.json` menunjuk `ml/configs/experiment-v2.json`. Run baru tersimpan di `ml/runs/words-reference-v2/`; run dan paket v1 tetap tersedia. Jalankan `npm run prepare:ml` untuk ekspor sesuai konfigurasi aktif, lalu `npm run dev` dan reload browser. Lihat [laporan v2](../reports/training-reference-v2.md).
+
+Untuk menambah label lagi, buat konfigurasi training dengan `outputDir` versi baru dan `expectedLabelCount` yang sesuai, ekstrak/train pada versi tersebut, lalu ubah `modelId`, `configPath`, dan `expectedLabelCount` di konfigurasi aktif sebelum ekspor. Nama akhir direktori run harus sama dengan `modelId`. Jangan menimpa run lama. Jumlah langkah temporal tetap 30; angka itu berbeda dari jumlah kelas kata.
+
+Tanggal: 6 November 2026. Status: video referensi tersedia secara lokal; pemilik mengonfirmasi izin umum, peninjauan bentuk isyarat, pemisahan huruf/kata, dan satu gerakan per video. Pipeline eksperimen training lokal ditambahkan; hasil dijelaskan pada laporan run setelah dijalankan. Acuan: [PRD](../prd.md), [arsitektur](../archtecture.md), dan [todo](../todo.md).
+
+## Inventaris video lokal
+
+Pemilik proyek menambahkan 49 file MP4 di `ml/dataset/`, berukuran total sekitar 44,36 MiB. Berdasarkan nama file, terdapat 26 label huruf A–Z dan 23 label kata, masing-masing satu file. Total durasi menurut metadata kontainer adalah 245,40 detik, dengan rentang 3,236–9,910 detik per file.
+
+Label kata: Apa, Bantu, Belum, Buku, Guru, Halo, Jadwal, Kamu, Kelas, Maaf, Minta, Mulai, Nama, Saya, Sekolah, Selesai, Siapa, Tanya, Tidak, Tugas, Ulang, Waktu, dan Ya.
+
+Pemilik menyatakan sumbernya dari [Kamus SIBI](https://pkplk.kemendikdasmen.go.id/sibi/pencarian/advance) dan mengonfirmasi izin penggunaan umum. Eksperimen lokal dilakukan atas konfirmasi tersebut; agen tidak menetapkan lisensi baru. Bukti tertulis dan cakupan distribusi model/klip belum dilampirkan. Pemilik telah memeriksa bentuk isyarat dan menyatakan satu video berisi satu gerakan. Data kini terpisah di `ml/dataset/huruf/` dan `ml/dataset/kata/`. Catat URL entri serta makna spesifik untuk ketertelusuran berikutnya.
+
+Pemeriksaan awal hanya mencakup jumlah, nama, ukuran, header MP4, dan durasi. Seluruh 49 file mempunyai header MP4 dan metadata durasi yang terbaca. Pemeriksaan ini belum membuktikan semua frame dapat didekode, kualitas gerakan, jumlah pemeraga/pengulangan dalam video, atau kesesuaian dengan fitur tangan.
+
+Folder lokal ini diabaikan Git dan belum menjadi dataset training tervalidasi. Jangan menyalinnya ke `public/`. Untuk penyimpanan jangka panjang, gunakan lokasi terbatas di luar repository sesuai aturan proyek. Tidak ada file yang dipindahkan oleh pemeriksaan ini.
+
+Satu video per label belum menyediakan split lintas peserta yang dapat diverifikasi. Jangan membagi frame satu video secara acak ke train dan test. Sebelum training yang dilaporkan sebagai hasil produk, lengkapi izin, metadata pemeraga/sesi, peninjauan label, variasi sampel, serta data negatif. Video referensi dapat menjadi bahan uji teknis setelah cakupan penggunaannya jelas; hasil pada video yang sama bukan bukti generalisasi ke webcam pengguna baru.
 
 ## Alur yang akan dikerjakan
 
@@ -37,7 +59,7 @@ Jangan memulai pengumpulan besar sebelum label dan bentuk isyarat diperiksa. Rek
 - Dataset tersebut bukan kumpulan 30 kata kelas terisolasi yang langsung cocok dengan PRD. Inventarisasi label dan kebutuhan anotasi sebelum menentukan penggunaannya. Jangan memberi label satu kata pada seluruh klip kalimat.
 - [Kamus SIBI Kemendikdasmen](https://pkplk.kemendikdasmen.go.id/sibi/pencarian/pencariankata) dapat menjadi referensi demonstrasi. Izin pemakaian ulang video untuk training/hosting tetap perlu diperiksa.
 
-Tidak ada video yang diunduh atau dataset yang dikumpulkan oleh pembuatan panduan ini.
+Panduan ini tidak mengunduh video. Video lokal pada inventaris di atas ditambahkan oleh pemilik proyek.
 
 ## Peralatan dan lingkungan
 
@@ -45,8 +67,62 @@ Tidak ada video yang diunduh atau dataset yang dikumpulkan oleh pembuatan pandua
 - Kamera harus menampilkan seluruh gerakan dan kedua tangan ketika diperlukan. Kamera laptop berguna untuk mendekati kondisi penggunaan akhir; HP boleh menjadi alat rekam tambahan dengan metadata orientasi/resolusi yang jelas.
 - Simpan dataset di lokasi terbatas di luar repository, dengan cadangan sesuai persetujuan peserta. Jangan mengunggah ke notebook cloud tanpa memeriksa izin datanya.
 - Training direncanakan memakai Python, TensorFlow/Keras, NumPy, utilitas evaluasi, dan converter TensorFlow.js. Dependensi akan dikunci setelah uji training -> ekspor -> browser berhasil; jangan memasang semua versi terbaru secara acak.
-- Mesin saat ini memiliki Python 3.14.6. Kompatibilitas lingkungan training belum diuji. Gunakan lingkungan virtual terpisah dengan kombinasi versi Python/TensorFlow/converter yang terbukti cocok; jangan mengganti Python global hanya untuk proyek ini.
-- Alat rekam landmark, pipeline preprocessing, dan skrip training masih perlu diimplementasikan. Folder `ml/scripts` belum berisi perintah training yang bisa dijalankan.
+- Eksperimen memakai `.venv` Python 3.12 terpisah; dependensi tercantum di `requirements.in` dan seluruh hasil resolusi dikunci di `requirements.lock`. Python global tidak diganti. Converter TF.js belum termasuk lingkungan ini.
+- `ml/scripts/extract.py` dan `ml/scripts/train.py` menyediakan jalur ekstraksi serta training eksperimen dari video lokal. Alat rekam peserta dan preprocessing browser belum diimplementasikan.
+
+## Menjalankan eksperimen lokal
+
+Jalankan PowerShell dari root repository. Setup pertama membutuhkan unduhan Python/paket dan model detektor resmi; video tidak diunggah.
+
+```powershell
+uv venv --python 3.12 .venv
+uv pip sync ml/requirements.lock --python .venv/Scripts/python.exe
+New-Item -ItemType Directory -Path ml/assets -Force | Out-Null
+Invoke-WebRequest -Uri 'https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task' -OutFile ml/assets/hand_landmarker.task
+```
+
+Ekstraksi dan training:
+
+```powershell
+& .venv/Scripts/python.exe -m unittest discover -s ml/tests -v
+& .venv/Scripts/python.exe ml/scripts/extract.py --config ml/configs/experiment.json
+& .venv/Scripts/python.exe ml/scripts/train.py --config ml/configs/experiment.json
+```
+
+Konfigurasi bawaan memakai semua 23 kata yang ada di folder `kata`, LSTM 64 unit, seed 42, dan 100 epoch pada CPU. `labels: []` berarti semua label; isi daftar huruf kecil untuk subset. Huruf tidak dicampurkan ke model kata. Untuk run berikutnya, salin konfigurasi dan ganti `outputDir`; skrip menolak menimpa ekstraksi/model yang sudah ada.
+
+Hasil lokal di `ml/runs/words-reference-v1/`:
+
+- `raw/*.npz`: landmark, timestamp, mask, dan skor handedness per klip.
+- `extraction.json`: provenance, checksum, dimensi, serta kualitas deteksi.
+- `sequences.npz`: fitur urutan untuk training.
+- `model.keras`: classifier terlatih; `labels.json` adalah urutan output wajib.
+- `preprocess.json`, `history.json`, dan `report.json`: kontrak, loss, lingkungan, serta batasan model.
+
+Eksperimen mengambil landmark pada 15 Hz lalu meresample SELURUH klip gerakan menjadi 30 langkah. Input memiliki 137 fitur per langkah. Kontrak ini bernama `hands-clip-normalized-v1` dan berbeda dari window live dua detik pada rancangan rilis. Model memerlukan klip tersegmentasi; tidak dipasang ke aplikasi atau `public/`. Kesetaraan preprocessing Python/TypeScript dan ekspor TF.js belum dibuktikan.
+
+Tidak ada validation/test independen. Seluruh augmentasi hanya ditambahkan ke train dan bukan dihitung sebagai pemeraga baru. `sourceClipMemorizationAccuracy` pada laporan hanya memeriksa kecocokan dengan sumber yang ikut dilatih. Nilai `testAccuracy` dan `macroF1` sengaja `null`; skor softmax tidak dianggap probabilitas kebenaran. Jangan gunakan model ini sebagai bukti pengenalan pengguna baru atau kesiapan rilis.
+
+### Hasil run pertama
+
+Run `words-reference-v1` pada 6 November 2026 selesai: 23 klip sumber, 575 urutan termasuk augmentasi, 100 epoch, loss akhir 0,0008436764. Model cocok dengan 23/23 klip sumber yang ikut training. Selisih maksimum skor setelah menyimpan dan memuat ulang Keras adalah 0. Delapan unit test lulus pada lingkungan training. Ini belum akurasi test. Rincian dan kualitas ekstraksi ada di [laporan eksperimen](../reports/training-reference-v1.md).
+
+## Integrasi browser eksperimen
+
+Pemilik meminta model dihubungkan ke web. Jalankan dari root setelah training tersedia:
+
+```powershell
+npm run prepare:ml
+npm run dev
+```
+
+`export_web.py` memeriksa arsitektur Keras, mengekspor bobot float32 dan fixture prediksi ke folder privat run. `prepare-ml.mjs` membuat arsitektur TF.js identik, memasang bobot asli, membandingkan 23 prediksi, lalu memakai API simpan Layers TF.js untuk menulis `model.json`/`weights.bin`. Ini tidak menggunakan converter Python tambahan. Label order, preprocessing, checksum, status eksperimen, dan ambang awal ikut paket. Semua aset termasuk detektor dan WASM disalin lokal ke `public/ml/` yang diabaikan Git. Fixture model berbasis data sumber tidak disalin ke public; fixture preprocessing yang dilacak sepenuhnya sintetis.
+
+`predev` dan `prebuild` membangun worker klasik dan memeriksa kelengkapan aset. Worker klasik digunakan karena loader WASM MediaPipe memakai `importScripts`; kode worker yang sama dipakai pada dev dan produksi. Restart dev setelah mengubah worker. Tidak ada backend atau upload kamera.
+
+Gunakan rekaman satu isyarat utuh 1–10 detik, lalu periksa kandidat dan konfirmasi manual. Pengambilan landmark memakai target 15 Hz dengan satu frame aktif, normalisasi klip utuh menjadi 30 langkah, dan preprocessing yang sama dengan Python. Gap frame di atas 200 ms, tanpa tangan, serta tangan hilang di tengah interval aktif lebih dari 400 ms ditolak. Jeda netral awal/akhir diperbolehkan. Gate ini tidak membuktikan seluruh gerakan sudah terekam atau menjamin penolakan semua unknown.
+
+Pada 6 November 2026, fixture preprocessing sintetis lolos Python/TS dan classifier TF.js di Chrome cocok dengan Keras pada seluruh 23 input sumber (max error 1,1921e-7). Ini parity numerik classifier, bukan akurasi pengguna baru atau parity penuh video-ke-landmark antara platform. Field `browserParityVerified: false` pada kontrak training tetap menandai belum adanya validasi penuh tersebut. Tidak mengubah `releaseEligible: false`. Lihat [laporan integrasi](../reports/browser-integration-v1.md).
 
 ## Prosedur rekam yang diusulkan
 

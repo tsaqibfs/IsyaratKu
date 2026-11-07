@@ -17,10 +17,13 @@ Thumbs.db
 # Participant data must never be committed or published
 data-local/
 datasets/
+ml/dataset/
 consents/
 recordings/
 ml/runs/
 ml/checkpoints/
+ml/assets/
+public/ml/
 *.keras
 *.h5
 *.hdf5

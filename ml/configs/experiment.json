@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "isyaratku-reference-experiment-v1",
+  "preprocessVersion": "hands-clip-normalized-v1",
+  "datasetDir": "ml/dataset/kata",
+  "outputDir": "ml/runs/words-reference-v1",
+  "landmarkerPath": "ml/assets/hand_landmarker.task",
+  "sourceUrl": "https://pkplk.kemendikdasmen.go.id/sibi/pencarian/advance",
+  "permissionStatus": "owner-confirmed-general-use",
+  "labelReview": "owner-confirmed-single-gesture-per-video",
+  "mirror": false,
+  "sampleHz": 15,
+  "sequenceLength": 30,
+  "maxGapMs": 200,
+  "seed": 42,
+  "augmentationsPerClip": 24,
+  "epochs": 100,
+  "batchSize": 32,
+  "lstmUnits": 64,
+  "labels": []
+}

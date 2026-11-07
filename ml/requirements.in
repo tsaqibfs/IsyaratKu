@@ -1,0 +1,5 @@
+# Python 3.12; CPU training on Windows. Lock all transitive versions after resolve.
+mediapipe==0.10.21
+tensorflow==2.19.1
+numpy==1.26.4
+opencv-contrib-python==4.11.0.86
