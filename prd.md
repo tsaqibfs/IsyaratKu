@@ -1,16 +1,20 @@
-# Isyaratku AI — kebutuhan produk
+# IsyaratKu — kebutuhan produk
+
+Pembaruan 7 November 2026: model eksperimen di browser bertambah menjadi 31 label atas permintaan pemilik. Ini belum 31 kosakata rilis yang tervalidasi lintas peserta. Target dan batas MVP tetap dibedakan dari kemampuan eksperimen; lihat `reports/training-reference-v2.md`.
 
 Status: rancangan awal untuk MVP lomba, belum tervalidasi oleh pengguna.  
 Tanggal: 1 November 2026.  
 Dokumen terkait: [arsitektur](archtecture.md), [panduan agen](agents.md), [rencana kerja](todo.md).
 
+Pembaruan implementasi 6 November 2026: model eksperimen 23 kata sudah terhubung ke kamera/editor di browser melalui alur rekam satu isyarat dan konfirmasi kandidat. Input masih klip utuh tersegmentasi, belum pengenalan kontinu. Tidak ada evaluasi peserta baru; suara/klip balasan serta kriteria rilis di bawah belum terpenuhi. Rincian hasil dan batas pengujian ada di [laporan integrasi](reports/browser-integration-v1.md). Target MVP pada dokumen ini tetap menjadi acuan, bukan klaim kemampuan versi eksperimen.
+
 ## 1. Ringkasan
 
-Isyaratku AI membantu komunikasi sederhana antara mahasiswa Tuli pengguna SIBI dan dosen atau teman dengar di kelas. Aplikasi mengenali kosakata SIBI terbatas dari webcam menjadi teks, dengan pembacaan suara opsional. Pengguna dengar dapat mengetik kosakata yang didukung untuk menampilkan klip demonstrasi isyarat.
+IsyaratKu membantu komunikasi sederhana antara mahasiswa Tuli pengguna SIBI dan dosen atau teman dengar di kelas. Aplikasi mengenali kosakata SIBI terbatas dari webcam menjadi teks, dengan pembacaan suara opsional. Pengguna dengar dapat mengetik kosakata yang didukung untuk menampilkan klip demonstrasi isyarat.
 
 Pemrosesan kamera dan pengenalan berlangsung di browser. Tidak diperlukan server inferensi atau GPU server. Pelatihan model dilakukan terpisah sebelum aplikasi dirilis.
 
-Judul presentasi yang disarankan: **Isyaratku AI: pengenal kosakata SIBI untuk komunikasi kelas di browser**. Istilah “penerjemah real-time” harus disertai penjelasan bahwa MVP mengenali isyarat terpisah dengan jeda, bukan percakapan SIBI bebas.
+Judul presentasi yang disarankan: **IsyaratKu: pengenal kosakata SIBI untuk komunikasi kelas di browser**. Istilah “penerjemah real-time” harus disertai penjelasan bahwa MVP mengenali isyarat terpisah dengan jeda, bukan percakapan SIBI bebas.
 
 ## 2. Masalah dan sasaran
 

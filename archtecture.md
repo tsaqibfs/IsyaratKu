@@ -1,12 +1,14 @@
-# Arsitektur Isyaratku AI
+# Arsitektur IsyaratKu
+
+Pembaruan 7 November 2026: paket aktif `words-reference-v2` memakai 31 kelas dan kontrak fitur yang sama. ID model, path konfigurasi training, serta jumlah kelas berasal dari `ml/configs/active-model.json`; exporter/runtime/UI/e2e tidak lagi mengunci 23 kelas. Validasi versi sumber/target, handshake worker, dan query versi mencegah pemakaian paket/worker yang tidak sesuai. Run v1 tetap disimpan; rincian verifikasi di `reports/training-reference-v2.md`. Catatan 6 November berikut adalah riwayat v1.
 
 Nama file mengikuti permintaan: `archtecture.md`.  
-Status: rancangan awal, belum merupakan implementasi. Tanggal: 1 November 2026.  
+Status: kontrak MVP dengan integrasi eksperimen klip utuh; target rilis belum terpenuhi. Rancangan awal 1 November 2026, diperbarui 6 November 2026.
 Acuan: [PRD](prd.md), [panduan agen](agents.md), [rencana kerja](todo.md).
 
 Pembaruan setup 2 November 2026: fondasi SPA dan struktur folder mulai diimplementasikan pada T06. Bagian pipeline kamera, worker, preprocessing, classifier, dan pelatihan di bawah tetap merupakan rancangan. `public/vocabulary.json` berisi daftar kosong dengan status `awaiting-validation`; tidak ada kata yang diklaim didukung. Nama file tetap `archtecture.md`, sesuai dokumen awal.
 
-Fondasi teruji: React 19.3.1, TypeScript 6.0.3, Vite 8.3.5, Vitest 5.0.5, dan Playwright 1.64.1 pada Node.js 26.8.2. Semua dependensi langsung dikunci exact dalam `package.json` dan dependensi transitif dalam `package-lock.json`. D-03 untuk MediaPipe/TF.js dan backend worker masih terbuka; paket ML belum dipasang atau diuji.
+Fondasi teruji: React 19.3.1, TypeScript 6.0.3, Vite 8.3.5, Vitest 5.0.5, dan Playwright 1.64.1 pada Node.js 26.8.2. Semua dependensi langsung dikunci exact dalam `package.json` dan dependensi transitif dalam `package-lock.json`. MediaPipe Tasks Vision 0.10.21 dan TF.js 4.22.0 kini terpasang dan teruji pada worker CPU Chrome untuk eksperimen. Rincian keputusan dan batas evaluasi ada pada bagian 10; validasi perangkat fisik serta target rilis tetap terbuka.
 
 ## 1. Keputusan awal
 
@@ -211,6 +213,26 @@ Untuk suara, muat daftar voice dan tangani `voiceschanged`. Pilih `id-ID` atau v
 | D-04 | Dimensi fitur, window, model temporal | Sebelum perluasan 30 kata |
 | D-05 | Penanggung jawab dan tanggal penghapusan data | Sebelum rekam pertama |
 | D-06 | Provider hosting dan aturan lomba | Sebelum demo publik |
+
+### Eksperimen lokal 6 November 2026
+
+Atas permintaan pemilik, video referensi kata dipakai untuk training eksperimen lokal setelah pemilik mengonfirmasi izin umum, bentuk isyarat yang sudah diperiksa, dan satu gerakan per video. Rincian eksekusi di `ml/PLAN.md` dan `ml/README.md`. Model, data, serta aset detektor tetap lokal dan diabaikan Git.
+
+Kontrak `hands-clip-normalized-v1` memakai ekstraksi Hand Landmarker Tasks Vision VIDEO pada 15 Hz, dua slot handedness, fitur 137 dimensi, dan 30 langkah hasil normalisasi waktu seluruh klip. Fitur menyimpan bentuk relatif telapak, koordinat pergelangan, mask, serta selisih posisi kedua pergelangan. Interpolasi tidak melewati tangan hilang atau gap di atas 200 ms. LSTM 64 unit menjadi model eksperimen kata dinamis. Huruf tidak dicampurkan.
+
+Ini bukan pengganti kontrak streaming rilis: klip disegmentasi dari awal dan durasinya dinormalisasi, sedangkan pipeline browser membutuhkan window serta decoder. Tidak dibuat split frame acak atau metrik test karena hanya ada satu klip per label dan metadata pemeraga belum tersedia. Semua turunan hanya train; model diberi `releaseEligible: false`. Parity muat ulang Keras diperiksa, tetapi parity Python/browser, ekspor TF.js, validasi lintas peserta, dan data negatif tetap diperlukan sebelum integrasi nyata. T12/T14/T16 penuh tetap terbuka.
+
+### Integrasi browser eksperimen 6 November 2026
+
+Atas permintaan pemilik, `words-reference-v1` kini dipakai pada web dengan batas klip tersegmentasi yang sama dengan training. Alur eksplisit mulai kamera → rekam satu isyarat → selesai/periksa → konfirmasi satu kata menggantikan auto-commit streaming untuk eksperimen ini. Tidak mengklaim penerjemahan bebas, model rilis, atau kualitas pada pengguna baru. Manifest kosakata rilis tetap kosong; metadata model memuat 23 label eksperimen.
+
+Model Keras diekspor melalui bobot identik ke arsitektur TF.js Layers, disimpan memakai API resmi TF.js, dan diuji parity pada 23 input sumber (toleransi 0,0001; max error Chrome 1,1921e-7). Preprocessing `hands-clip-normalized-v1` dipakai di Python dan TypeScript dengan fixture sintetis dua tangan/mask/gap/aspek/telapak degenerat (toleransi 0,00002). Ini belum membuktikan parity penuh video-ke-landmark atau kualitas lintas peserta.
+
+MediaPipe JS 0.10.21 dan TF.js 4.22.0 terkunci di lockfile npm. Worker klasik dibangun terpisah melalui Vite library IIFE, `publicDir: false`, ke `public/ml/runtime/recognition.worker.js`; loader WASM memakai `importScripts`, sehingga worker klasik yang sama disajikan pada dev dan produksi. `predev`/`prebuild` membangun worker lalu memeriksa aset. Model, WASM, dan detektor same-origin; paket model memeriksa hash, versi fitur, bentuk input/output, dan label order sebelum dipakai. Aset generated berada di ignore; tidak ada data mentah atau fixture sumber di public.
+
+Controller membatasi satu frame aktif, menutup ImageBitmap setelah pemrosesan, memakai ID sesi/klip untuk menolak hasil lama, dan melepas track/worker saat stop/unmount/visibility hidden/perangkat berakhir. Model CPU hanya mengeluarkan kandidat setelah klip selesai. Ambang eksperimen skor 0,85/margin 0,15 belum dikalibrasi. Durasi 1–10 detik, gap frame maksimal 200 ms, minimal lima frame tangan, dan proporsi kehadiran tangan minimal 20%. Jeda netral awal/akhir diperbolehkan, tetapi tangan hilang di tengah interval aktif di atas 400 ms ditolak. Kualitas ini tidak menjamin kelengkapan semantik gerakan. Tidak ada auto-append; pengguna harus mengonfirmasi sekali per kandidat yang memenuhi ambang.
+
+Pemeriksaan: 11 unit dan 6 e2e Chrome lulus, termasuk worker/model nyata dengan stream kanvas sintetis. Izin ditolak dan event hidden/perangkat terputus disimulasikan. Device fake bawaan Chrome berhenti sendiri bahkan pada contoh minimal; webcam fisik belum diuji. Uji 30 inferensi classifier tidak menambah tensor aktif; benchmark end-to-end/10 menit dan evaluasi lintas peserta tetap terbuka. Rincian di `reports/browser-integration-v1.md`; tugas T08/T09/T17/T19 penuh belum ditandai selesai.
 
 ## 11. Rujukan
 
