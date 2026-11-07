@@ -44,7 +44,7 @@ export function RecognitionPanel({ onCommit, onCorrect }: { onCommit: (word: str
         <button type="button" className="secondary-button" onClick={correct}>Perbaiki pesan</button>
       </div>
     </div>}
-    {labels.length > 0 && <details className="vocabulary-list"><summary>{labels.length} kata yang dapat dicoba</summary><p>{labels.join(', ')}.</p></details>}
+    {labels.length > 0 && <p className="vocabulary-list"><a href="#kosakata">{labels.length} kata yang dapat dicoba</a></p>}
     <p className="note experiment-note">Pengenalan isyarat masih dalam pengembangan dan bisa keliru. Selalu periksa hasilnya. Kamu dapat menulis pesan sendiri kapan saja.</p>
   </section>
 }

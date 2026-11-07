@@ -1,6 +1,8 @@
 import activeModel from '../../ml/configs/active-model.json'
 import { useRef, useState } from 'react'
 import { RecognitionPanel } from '../features/camera/RecognitionPanel'
+import { SpeechControls } from '../features/speech/SpeechControls'
+import { VocabularyGuide } from '../features/vocabulary/VocabularyGuide'
 
 export function App() {
   const [text, setText] = useState('')
@@ -19,6 +21,7 @@ export function App() {
         </a>
         <nav aria-label="Navigasi utama">
           <a className="nav-current" href="#utama" aria-current="page">Ruang komunikasi</a>
+          <a href="#kosakata">Kosakata</a>
           <a href="#panduan">Panduan</a>
         </nav>
         <span className="stage"><span className="status-dot" aria-hidden="true" />Dalam pengembangan</span>
@@ -49,6 +52,7 @@ export function App() {
               <span className="character-count">{text.length} karakter</span>
               <button className="text-button" type="button" disabled={!text} onClick={() => setText('')}>Bersihkan teks</button>
             </div>
+            <SpeechControls text={text} />
             <button ref={showText} type="button" className="large-text-button secondary-button" disabled={!text.trim()} onClick={() => largeText.current?.showModal()}>Tampilkan teks besar</button>
             <p className="note" id="teks-info">Periksa dan perbaiki pesan sebelum menunjukkannya kepada lawan bicara. Kata ditambahkan setelah kamu memilih Gunakan kata. Pesan hilang saat halaman dimuat ulang.</p>
             <div className="clip-status">
@@ -57,6 +61,7 @@ export function App() {
             </div>
           </section>
         </div>
+        <VocabularyGuide />
         <section className="guidance" id="panduan" aria-labelledby="batasan">
           <div><p className="eyebrow">Sebelum memulai</p><h2 id="batasan">Langkah kecil.<br />Percakapan lebih terbuka.</h2></div>
           <div className="guidance-copy">
@@ -66,7 +71,7 @@ export function App() {
         </section>
         <aside className="privacy-note" id="privasi" aria-labelledby="privasi-judul">
           <h2 id="privasi-judul">Percakapan tetap di halaman ini.</h2>
-          <p>Kamera hanya menyala atas pilihanmu, tanpa mikrofon. Gerakan dibaca di perangkatmu. Video tidak disimpan; video, gerakan, dan pesan tidak dikirim keluar perangkat. Kamera berhenti saat kamu menghentikannya atau berpindah tab. Pesan hilang saat halaman dimuat ulang.</p>
+          <p>Kamera hanya menyala atas pilihanmu, tanpa mikrofon. Gerakan dibaca di perangkatmu. Video tidak disimpan; video, gerakan, dan pesan tidak dikirim keluar perangkat. Pembacaan pesan memakai suara yang tersedia di perangkat. Kamera dan suara berhenti saat kamu menghentikannya atau berpindah tab. Pesan hilang saat halaman dimuat ulang.</p>
         </aside>
       </main>
       <dialog ref={largeText} className="large-text-dialog" aria-labelledby="pesan-besar-judul" onClose={() => showText.current?.focus()} onKeyDown={event => {
