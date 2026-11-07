@@ -1,5 +1,7 @@
 # IsyaratKu
 
+Konfigurasi auto-deploy GitHub → Vercel tersedia di [DEPLOYMENT.md](DEPLOYMENT.md). Paket inferensi yang perlu ikut Git ada di `web-models/`; build hosting menyiapkan aset browser tanpa dataset/Python. Gunakan preset Vite, install `npm ci`, build `npm run check`, output `dist`, Node 26.x. Repository dan akun Vercel masih perlu dihubungkan setelah perubahan di-commit dan dipush.
+
 Pembaruan 7 November 2026: model v2 dengan 31 label sudah dilatih dan terhubung ke web. Konfigurasi aktif berada di `ml/configs/active-model.json`. Lint/typecheck/build, 13 unit test dan 6 e2e Chrome lulus. Lihat [hasil model v2](reports/training-reference-v2.md). Hasil 23 kelas di bawah merupakan riwayat model v1.
 
 Aplikasi web pengenal kosakata SIBI untuk komunikasi sederhana di kelas. React, TypeScript, dan Vite, dengan inferensi lokal tanpa backend.

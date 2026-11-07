@@ -52,7 +52,8 @@ const top1Equal = actual.every((r, i) => r.indexOf(Math.max(...r)) === fixture.e
 if (!top1Equal) throw new Error('Label ekspor berubah')
 tensor.dispose(); prediction.dispose(); model.dispose()
 await writeFile(`${target}/labels.json`, JSON.stringify(details.labels))
-await copyFile(`${config.outputDir}/preprocess.json`, `${target}/preprocess.json`)
+// Normalize text before hashing: Git's LF checkout must preserve model checksums.
+await writeFile(`${target}/preprocess.json`, (await readFile(`${config.outputDir}/preprocess.json`, 'utf8')).replace(/\r\n/g, '\n'))
 await copyFile('ml/assets/hand_landmarker.task', 'public/ml/hand_landmarker.task')
 await cp('node_modules/@mediapipe/tasks-vision/wasm', 'public/ml/wasm', { recursive: true })
 const hashes = {}
@@ -72,3 +73,8 @@ await writeFile(`${target}/metadata.json`, JSON.stringify(metadata, null, 2))
 await writeFile(`${run}/node-parity.json`, JSON.stringify(metadata.nodeParity, null, 2))
 console.log(`Ekspor Layers siap; parity ${fixture.inputs.length} klip: max error ${error}; top-1 identik.`)
 console.log(`Aset same-origin: ${target}; WASM ${((await readdir('public/ml/wasm')).length)} file.`)
+
+const gitPackage = `web-models/${active.modelId}`
+await mkdir(gitPackage, { recursive: true })
+for (const name of ['metadata.json', 'model.json', 'weights.bin', 'labels.json', 'preprocess.json']) await copyFile(`${target}/${name}`, `${gitPackage}/${name}`)
+console.log(`Paket model browser untuk Git diperbarui: ${gitPackage}`)

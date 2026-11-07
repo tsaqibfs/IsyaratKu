@@ -1,0 +1,17 @@
+.git/
+.venv/
+node_modules/
+ml/dataset/
+ml/runs/
+ml/assets/
+ml/checkpoints/
+recordings/
+consents/
+data-local/
+dist/
+public/ml/
+test-results/
+playwright-report/
+.env
+.env.*
+!.env.example
