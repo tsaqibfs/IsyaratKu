@@ -1,0 +1,5 @@
+{
+  "modelId": "words-reference-v2",
+  "configPath": "ml/configs/experiment-v2.json",
+  "expectedLabelCount": 31
+}

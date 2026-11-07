@@ -9,7 +9,7 @@ describe('fondasi aplikasi', () => {
     try {
       render(<App />)
       expect(getUserMedia).not.toHaveBeenCalled()
-      expect(screen.getByRole('button', { name: 'Mulai kamera' })).toBeDisabled()
+      expect(screen.getByRole('button', { name: 'Mulai kamera' })).toBeEnabled()
       expect(screen.getByLabelText('Teks percakapan')).toHaveValue('')
       expect(screen.getByText(/Belum ada kata yang didukung/)).toBeVisible()
     } finally {
